@@ -1,0 +1,818 @@
+# Projektübergabe – FitFürInfo
+
+## 1. Projekt
+
+Ich entwickle im Rahmen meiner Ausbildung zum **Fachinformatiker für Systemintegration** ein Schulprojekt für **LF12 – Kundenspezifische Systemintegration durchführen**.
+
+Das Projekt basiert auf einem Fallbeispiel von **FitFürInfo**.
+
+Ziel ist eine lokale Webanwendung zur Verwaltung von:
+
+* Mitarbeitern
+* Kursen
+* Räumen
+* Software in Räumen
+* Raum-Berechtigungen
+* Raumbelegungen / Buchungen
+* Kalender
+
+Die Anwendung läuft lokal mit **XAMPP** und einer **MySQL-Datenbank über phpMyAdmin**.
+
+---
+
+# 2. Technische Vorgaben
+
+Sehr wichtig:
+
+* PHP
+* MySQL
+* phpMyAdmin
+* XAMPP
+* Die Anwendung muss auf dem Schul-PC mit **XAMPP 5.6.36** laufen.
+* Deshalb muss der PHP-Code **PHP-5.6-kompatibel** sein.
+* Keine modernen PHP-Funktionen verwenden, die erst ab PHP 7 verfügbar sind.
+* Für das Design wird **ausschließlich W3.CSS** verwendet.
+* Kein Bootstrap
+* Kein Tailwind
+* Kein eigenes CSS / keine style.css
+* W3.CSS liegt lokal im Projektordner.
+
+---
+
+# 3. Projektordner
+
+Aktueller Pfad auf meinem Windows-PC:
+
+C:\Users\adam-3z0hv9rmpbxv8fu\Desktop\XAMPP\htdocs\fitfuerinfo\
+
+Struktur:
+
+fitfuerinfo/
+│
+├── index.php
+├── login.php
+├── dashboard.php
+├── w3.css
+│
+├── config/
+│   └── database.php
+│
+├── includes/
+│   ├── header.php
+│   └── footer.php
+│
+├── admin/
+│   └── mitarbeiter_erstellen.php
+│
+├── passwort_setzen.php
+│
+├── kurse/
+│
+├── raeume/
+│
+└── buchungen/
+
+Die Ordner `kurse`, `raeume` und `buchungen` werden noch weiter aufgebaut.
+
+---
+
+# 4. Datenbank
+
+Die Datenbank heißt:
+
+fitfuerinfo
+
+Die Datenbank wurde über phpMyAdmin erstellt.
+
+## Tabelle `mitarbeiter`
+
+Aktuelle gewünschte Struktur:
+
+* `user_id`
+* `benutzername`
+* `passwort`
+* `vorname`
+* `nachname`
+* `ist_admin`
+* `aktiv`
+* `erstellt_am`
+* `aktivierungscode`
+
+Wichtig:
+
+`user_id` ist der Primärschlüssel.
+
+`passwort` soll `VARCHAR(255)` sein und bei einem neu erstellten Mitarbeiter zunächst NULL sein dürfen.
+
+`aktivierungscode` soll ebenfalls als Text gespeichert werden und bei einem neuen Mitarbeiter vorhanden sein.
+
+Die Spaltennamen müssen exakt so geschrieben werden.
+
+---
+
+# 5. Weitere geplante Datenbanktabellen
+
+## `kurse`
+
+* `id`
+* `name`
+* `beschreibung`
+* `max_teilnehmer`
+* `erstellt_von`
+* `erstellt_am`
+
+## `kurs_besitzer`
+
+* `kurs_id`
+* `mitarbeiter_id`
+
+Damit können mehrere Mitarbeiter Besitzer eines Kurses sein.
+
+## `raeume`
+
+* `id`
+* `name`
+* `beschreibung`
+* `arbeitsplaetze`
+* `erstellt_am`
+
+## `software`
+
+* `id`
+* `name`
+
+## `raum_software`
+
+* `raum_id`
+* `software_id`
+
+Damit können mehrere Softwarepakete einem Raum zugeordnet werden.
+
+## `raum_berechtigungen`
+
+* `id`
+* `raum_id`
+* `mitarbeiter_id`
+
+Damit kann der Administrator einzelnen Mitarbeitern das Bearbeiten eines bestimmten Raumes erlauben.
+
+Der Administrator darf grundsätzlich alle Räume bearbeiten.
+
+## `buchungen`
+
+* `id`
+* `raum_id`
+* `kurs_id`
+* `mitarbeiter_id`
+* `beginn`
+* `ende`
+* `erstellt_am`
+
+---
+
+# 6. Benutzerkonzept
+
+Es gibt ausschließlich Konten für **FitFürInfo-Mitarbeiter**.
+
+Kursteilnehmer bekommen KEINE Benutzerkonten.
+
+Die Teilnehmerzahl eines Kurses wird lediglich als Feld im Kurs gespeichert.
+
+Es gibt einen Systemadministrator.
+
+Nur der Administrator darf:
+
+* Mitarbeiter erstellen
+* Mitarbeiter aktivieren bzw. Zugriff gewähren
+* Mitarbeiter deaktivieren
+* Räume erstellen
+* Raum-Berechtigungen vergeben
+* Mitarbeiterverwaltung durchführen
+
+Normale Mitarbeiter dürfen nicht selbst Accounts registrieren.
+
+---
+
+# 7. Passwortkonzept
+
+Der Administrator soll das Passwort des Mitarbeiters **nicht kennen**.
+
+Ablauf:
+
+Administrator erstellt Mitarbeiter:
+
+```
+↓
+```
+
+Mitarbeiter bekommt einen Aktivierungscode
+
+```
+↓
+```
+
+Mitarbeiter öffnet `passwort_setzen.php`
+
+```
+↓
+```
+
+Mitarbeiter gibt Aktivierungscode manuell ein
+
+```
+↓
+```
+
+Mitarbeiter legt eigenes Passwort fest
+
+```
+↓
+```
+
+Passwort wird mit `password_hash()` gehasht
+
+```
+↓
+```
+
+Hash wird in der Datenbank gespeichert
+
+```
+↓
+```
+
+Mitarbeiter wird auf `aktiv = 1` gesetzt
+
+```
+↓
+```
+
+Aktivierungscode wird gelöscht (`NULL`)
+
+```
+↓
+```
+
+Mitarbeiter kann sich anmelden
+
+Das Passwort wird NICHT entschlüsselt.
+
+Beim Login wird:
+
+`password_verify()`
+
+verwendet.
+
+---
+
+# 8. Passwortanforderungen
+
+Für das Schulprojekt gelten folgende Anforderungen:
+
+* mindestens 4 Zeichen
+* mindestens ein Kleinbuchstabe
+* mindestens eine Zahl
+
+Beispiel gültig:
+
+`test1`
+
+Beispiel ungültig:
+
+`TEST`
+
+Beispiel ungültig:
+
+`abcd`
+
+Die Prüfung erfolgt mit `strlen()` und `preg_match()`.
+
+---
+
+# 9. Datenbankverbindung
+
+Datei:
+
+`config/database.php`
+
+Aktueller Aufbau:
+
+```php
+<?php
+
+$host = "localhost";
+$dbname = "fitfuerinfo";
+$username = "root";
+$password = "";
+
+try {
+
+    $pdo = new PDO(
+        "mysql:host=" . $host . ";dbname=" . $dbname . ";charset=utf8mb4",
+        $username,
+        $password
+    );
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+
+    die("Datenbankverbindung fehlgeschlagen: " . $e->getMessage());
+
+}
+
+?>
+```
+
+---
+
+# 10. Login
+
+`login.php` verwendet:
+
+```php
+password_verify($passwort, $mitarbeiter["passwort"])
+```
+
+Die Datenbankabfrage sucht nur aktive Mitarbeiter:
+
+```sql
+SELECT *
+FROM mitarbeiter
+WHERE benutzername = :benutzername
+AND aktiv = 1
+LIMIT 1
+```
+
+Nach erfolgreichem Login wird die Session gesetzt:
+
+* `user_id`
+* `benutzername`
+* `vorname`
+* `nachname`
+* `ist_admin`
+
+Zusätzlich wird:
+
+```php
+session_regenerate_id(true);
+```
+
+verwendet.
+
+Der Login soll keinen Root-/Sonderlogin über den MySQL-Root-Benutzer mehr verwenden.
+
+---
+
+# 11. Mitarbeiter erstellen
+
+Datei:
+
+`admin/mitarbeiter_erstellen.php`
+
+Der Administrator gibt ein:
+
+* Vorname
+* Nachname
+* Benutzername
+
+Beim Erstellen:
+
+```text
+ist_admin = 0
+aktiv = 0
+```
+
+Das Passwort wird hier NICHT eingegeben.
+
+Der Mitarbeiter soll es später selbst setzen.
+
+Die SQL-Abfrage verwendet die Datenbankspalten:
+
+```sql
+benutzername
+vorname
+nachname
+ist_admin
+aktiv
+erstellt_am
+```
+
+---
+
+# 12. Aktivierungscode
+
+Die Idee ist:
+
+Beim Erstellen eines Mitarbeiters wird ein zufälliger Aktivierungscode erzeugt.
+
+Dieser wird beim Mitarbeiter gespeichert.
+
+Der Mitarbeiter kann anschließend `passwort_setzen.php` aufrufen und den Code manuell eingeben.
+
+Nach erfolgreichem Setzen des Passworts:
+
+```sql
+aktiv = 1
+aktivierungscode = NULL
+```
+
+Damit ist der Aktivierungscode nur einmal verwendbar.
+
+Wichtig für PHP 5.6:
+
+`random_bytes()` nicht verwenden.
+
+Für PHP 5.6 soll z.B. `openssl_random_pseudo_bytes()` verwendet werden.
+
+Beispiel:
+
+```php
+$aktivierungscode = bin2hex(openssl_random_pseudo_bytes(32));
+```
+
+---
+
+# 13. passwort_setzen.php
+
+Diese Seite funktioniert grundsätzlich bereits.
+
+Der Benutzer gibt den Aktivierungscode manuell ein.
+
+Das Formular enthält:
+
+* Aktivierungscode
+* Neues Passwort
+* Passwort wiederholen
+
+Der Aktivierungscode wird in der Datenbank gesucht:
+
+```sql
+SELECT *
+FROM mitarbeiter
+WHERE aktivierungscode = :aktivierungscode
+AND aktiv = 0
+LIMIT 1
+```
+
+Beim Speichern des Passworts:
+
+```php
+$passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
+```
+
+Danach:
+
+```sql
+UPDATE mitarbeiter
+SET passwort = :passwort,
+    aktiv = 1,
+    aktivierungscode = NULL
+WHERE user_id = :user_id
+```
+
+Wichtig: Die ID-Spalte heißt `user_id`, NICHT `id`.
+
+Das war bereits ein Fehler, der behoben wurde.
+
+---
+
+# 14. Aktueller Stand
+
+Bereits grundsätzlich umgesetzt:
+
+* Projektordner
+* XAMPP
+* Datenbank `fitfuerinfo`
+* Datenbankverbindung über PDO
+* W3.CSS
+* gemeinsamer Header
+* gemeinsamer Footer
+* Mitarbeiter-Tabelle
+* Mitarbeiter-Erstellung
+* Aktivierungscode-Konzept
+* Passwort setzen
+* Passwort-Hashing
+* Passwort-Verifikation
+* Login
+* Sessions
+* Aktivierung eines Mitarbeiters
+
+Der Login und das Setzen des Passworts sollen jetzt getestet werden.
+
+---
+
+# 15. Noch zu erledigen
+
+Die nächsten großen Projektteile sind:
+
+## 1. Benutzerverwaltung
+
+Admin soll:
+
+* Mitarbeiter anzeigen
+* Mitarbeiter aktivieren/deaktivieren
+* Mitarbeiter löschen
+* Admin-Rechte verwalten
+
+Dabei muss sichergestellt werden, dass nur ein Administrator diese Seiten benutzen kann.
+
+---
+
+## 2. Dashboard
+
+Das Dashboard soll nach dem Login abhängig vom Benutzer unterschiedliche Funktionen anzeigen.
+
+Beispielsweise:
+
+Mitarbeiter:
+
+* Kurse
+* Räume
+* Kalender
+* Buchung
+
+Administrator zusätzlich:
+
+* Mitarbeiterverwaltung
+* Raumverwaltung
+* Raum-Berechtigungen
+
+---
+
+## 3. Kursverwaltung
+
+Mitarbeiter können:
+
+* Kurse erstellen
+* Kurse anderer Mitarbeiter ansehen
+* eigene Kurse bearbeiten
+* eigene Kurse löschen
+
+Ein Kurs kann mehrere Besitzer haben.
+
+Der Administrator kann mehrere Mitarbeiter als Besitzer eines Kurses zuweisen.
+
+---
+
+## 4. Raumverwaltung
+
+Räume enthalten:
+
+* Name
+* Beschreibung
+* Anzahl Arbeitsplätze
+* installierte Software
+
+Nur:
+
+* Administrator
+* oder Mitarbeiter mit entsprechender `raum_berechtigungen`
+
+dürfen einen Raum bearbeiten.
+
+Alle Mitarbeiter dürfen Räume ansehen.
+
+---
+
+## 5. Softwareverwaltung
+
+Softwarepakete sollen angelegt und Räumen zugeordnet werden.
+
+Beispiel:
+
+Raum 101:
+
+* 20 Arbeitsplätze
+* Microsoft Office
+* Visual Studio Code
+* MySQL
+* PHP
+
+---
+
+# 16. Raumbuchungssystem
+
+Das ist jetzt der nächste große Entwicklungsschritt.
+
+Ein Mitarbeiter soll:
+
+1. einen Kurs auswählen
+2. einen Raum auswählen
+3. Datum auswählen
+4. Beginn auswählen
+5. Ende auswählen
+
+Das System prüft automatisch:
+
+### Raumkapazität
+
+Beispiel:
+
+Kurs:
+
+`25 Teilnehmer`
+
+Raum:
+
+`20 Arbeitsplätze`
+
+→ Buchung nicht erlaubt.
+
+---
+
+### Softwareanforderungen
+
+Ein Kurs soll später Anforderungen an Software haben können.
+
+Das System muss prüfen:
+
+```text
+Kurs benötigt Software X
+        ↓
+Raum besitzt Software X?
+        ↓
+Ja → möglich
+Nein → Buchung nicht möglich
+```
+
+---
+
+### Zeitüberschneidungen
+
+Ein Raum darf nicht doppelt zur gleichen Zeit gebucht werden.
+
+Beispiel:
+
+Raum 101:
+
+10:00–12:00 belegt
+
+Neue Buchung:
+
+11:00–13:00
+
+→ nicht erlaubt.
+
+Neue Buchung:
+
+12:00–14:00
+
+→ möglich, weil der erste Zeitraum beendet ist.
+
+---
+
+# 17. Stornierung
+
+Eine Buchung darf gelöscht werden von:
+
+* dem Mitarbeiter, der die Buchung erstellt hat
+* dem Administrator
+
+Nach dem Löschen der Buchung ist der Zeitraum automatisch wieder frei.
+
+Es muss keine zusätzliche "Freigabe" gespeichert werden.
+
+---
+
+# 18. Kalender
+
+Es soll einen Kalender geben, in dem die Raumbelegungen sichtbar sind.
+
+Der Benutzer soll erkennen können:
+
+* welcher Raum
+* welcher Kurs
+* wann belegt
+
+Eine stornierte Buchung darf nicht mehr als Belegung erscheinen.
+
+---
+
+# 19. Rechte
+
+Es muss überall serverseitig geprüft werden.
+
+Nicht nur Buttons verstecken!
+
+Beispiel:
+
+Ein normaler Mitarbeiter ruft direkt auf:
+
+`admin/mitarbeiter_erstellen.php`
+
+auf.
+
+→ Zugriff muss verweigert werden.
+
+Ebenso bei:
+
+* fremde Kurse bearbeiten
+* fremde Kurse löschen
+* Räume ohne Berechtigung bearbeiten
+* fremde Buchungen löschen
+
+---
+
+# 20. SQL-Sicherheit
+
+SQL-Abfragen sollen über PDO Prepared Statements laufen.
+
+Beispiel:
+
+```php
+$stmt = $pdo->prepare($sql);
+
+$stmt->execute(array(
+    ":benutzername" => $benutzername
+));
+```
+
+Keine Benutzereingaben direkt in SQL-Strings einsetzen.
+
+Ausgaben aus Benutzereingaben mit:
+
+```php
+htmlspecialchars()
+```
+
+absichern.
+
+---
+
+# 21. PHP-Kompatibilität
+
+Da der Schul-PC XAMPP 5.6.36 verwendet:
+
+NICHT verwenden:
+
+* `??`
+* Arrow Functions
+* Typed Properties
+* moderne PHP-8-Funktionen
+* `random_bytes()`
+
+Stattdessen z.B.:
+
+```php
+isset($_POST["name"]) ? $_POST["name"] : "";
+```
+
+und für zufällige Aktivierungscodes:
+
+```php
+bin2hex(openssl_random_pseudo_bytes(32))
+```
+
+`password_hash()` und `password_verify()` sind okay, da sie bereits in PHP 5.5 eingeführt wurden.
+
+---
+
+# 22. Arbeitsweise
+
+Ich brauche Hilfe **Schritt für Schritt**.
+
+Bitte nicht gleichzeitig zehn Dateien umbauen.
+
+Am besten:
+
+1. Einen konkreten Schritt erklären
+2. Den vollständigen benötigten Code geben
+3. Ich kopiere ihn
+4. Ich teste ihn
+5. Falls Fehler → Fehlermeldung schicken
+6. Erst danach nächsten Schritt
+
+Ich habe noch nicht viel Erfahrung mit SQL und möchte das Projekt später auch dokumentieren können.
+
+Deshalb bitte bei wichtigen SQL-/PHP-Entscheidungen kurz erklären, **warum** wir es so machen.
+
+---
+
+# 23. Aktueller nächster Schritt
+
+Der Login und das Passwortsetzen funktionieren grundsätzlich.
+
+Als nächstes soll das **Raumbuchungssystem** aufgebaut werden.
+
+Dabei zunächst nicht sofort alles gleichzeitig programmieren.
+
+Sinnvolle Reihenfolge:
+
+1. Räume anzeigen
+2. Räume erstellen/bearbeiten
+3. Software einem Raum zuordnen
+4. Kurse vollständig aufbauen
+5. Buchungstabelle vorbereiten
+6. Buchungsformular
+7. Prüfung der Raumkapazität
+8. Prüfung der Software
+9. Prüfung auf Zeitüberschneidung
+10. Kalender
+11. Stornierung
+12. Rechteprüfung
+13. Tests
+14. Design verbessern
+
+Bitte weiterhin ausschließlich **W3.CSS** verwenden und PHP-5.6-kompatibel programmieren.

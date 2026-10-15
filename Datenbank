@@ -1,0 +1,42 @@
+CREATE DATABASE IF NOT EXISTS fitfuerinfo_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE fitfuerinfo_db;
+
+-- 1. Benutzer-Tabelle
+CREATE TABLE IF NOT EXISTS benutzer (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    passwort VARCHAR(255) NOT NULL,
+    rolle ENUM('mitarbeiter', 'admin') DEFAULT 'mitarbeiter',
+    erstellt_am TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Kursprofile-Tabelle
+CREATE TABLE IF NOT EXISTS kursprofile (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titel VARCHAR(100) NOT NULL,
+    beschreibung TEXT,
+    max_teilnehmer INT NOT NULL,
+    software_bedarf TEXT NOT NULL, -- z.B. "PHP, XAMPP, VS Code"
+    erstellt_von INT NOT NULL,
+    FOREIGN KEY (erstellt_von) REFERENCES benutzer(id) ON DELETE CASCADE
+);
+
+-- 3. Räume-Tabelle
+CREATE TABLE IF NOT EXISTS raeume (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    raum_name VARCHAR(50) NOT NULL,
+    arbeitsplaetze INT NOT NULL,
+    installierte_software TEXT NOT NULL
+);
+
+-- 4. Raumbuchungen-Tabelle
+CREATE TABLE IF NOT EXISTS raumbuchungen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    raum_id INT NOT NULL,
+    kurs_id INT NOT NULL,
+    gebucht_von INT NOT NULL,
+    datum DATE NOT NULL,
+    FOREIGN KEY (raum_id) REFERENCES raeume(id) ON DELETE CASCADE,
+    FOREIGN KEY (kurs_id) REFERENCES kursprofile(id) ON DELETE CASCADE,
+    FOREIGN KEY (gebucht_von) REFERENCES benutzer(id) ON DELETE CASCADE
+);

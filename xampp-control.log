@@ -1,0 +1,251 @@
+22:32:14  [main] 	Initializing Control Panel
+22:32:14  [main] 	Windows Version:  Enterprise  64-bit
+22:32:14  [main] 	XAMPP Version: 8.2.12
+22:32:14  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+22:32:14  [main] 	You are not running with administrator rights! This will work for
+22:32:14  [main] 	most application stuff but whenever you do something with services
+22:32:14  [main] 	there will be a security dialogue or things will break! So think 
+22:32:14  [main] 	about running this application with administrator rights!
+22:32:14  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\fitfuerinfo-main\"
+22:32:14  [main] 	Checking for prerequisites
+22:32:14  [main] 	All prerequisites found
+22:32:14  [main] 	Initializing Modules
+22:32:14  [main] 	Starting Check-Timer
+22:32:14  [main] 	Control Panel Ready
+22:32:19  [Apache] 	Attempting to start Apache app...
+22:32:19  [Apache] 	Status change detected: running
+22:32:19  [mysql] 	Attempting to start MySQL app...
+22:32:20  [Apache] 	Status change detected: stopped
+22:32:20  [Apache] 	Error: Apache shutdown unexpectedly.
+22:32:20  [Apache] 	This may be due to a blocked port, missing dependencies, 
+22:32:20  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+22:32:20  [Apache] 	Press the Logs button to view error logs and check
+22:32:20  [Apache] 	the Windows Event Viewer for more clues
+22:32:20  [Apache] 	If you need more help, copy and post this
+22:32:20  [Apache] 	entire log window on the forums
+22:33:45  [mysql] 	Attempting to start MySQL app...
+22:33:45  [Apache] 	Attempting to start Apache app...
+22:33:45  [Apache] 	Status change detected: running
+22:33:46  [Apache] 	Status change detected: stopped
+22:33:46  [Apache] 	Error: Apache shutdown unexpectedly.
+22:33:46  [Apache] 	This may be due to a blocked port, missing dependencies, 
+22:33:46  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+22:33:46  [Apache] 	Press the Logs button to view error logs and check
+22:33:46  [Apache] 	the Windows Event Viewer for more clues
+22:33:46  [Apache] 	If you need more help, copy and post this
+22:33:46  [Apache] 	entire log window on the forums
+22:34:35  [main] 	Deinitializing Modules
+22:34:35  [main] 	Deinitializing Control Panel
+
+22:34:40  [main] 	Initializing Control Panel
+22:34:40  [main] 	Windows Version:  Enterprise  64-bit
+22:34:40  [main] 	XAMPP Version: 8.2.12
+22:34:40  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+22:34:40  [main] 	You are not running with administrator rights! This will work for
+22:34:40  [main] 	most application stuff but whenever you do something with services
+22:34:40  [main] 	there will be a security dialogue or things will break! So think 
+22:34:40  [main] 	about running this application with administrator rights!
+22:34:40  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\xampp\"
+22:34:40  [main] 	Checking for prerequisites
+22:34:40  [main] 	All prerequisites found
+22:34:40  [main] 	Initializing Modules
+22:34:40  [main] 	Starting Check-Timer
+22:34:40  [main] 	Control Panel Ready
+22:34:41  [Apache] 	Attempting to start Apache app...
+22:34:42  [mysql] 	Attempting to start MySQL app...
+22:34:42  [Apache] 	Status change detected: running
+22:34:42  [mysql] 	Status change detected: running
+22:34:42  [Apache] 	Status change detected: stopped
+22:34:42  [Apache] 	Error: Apache shutdown unexpectedly.
+22:34:42  [Apache] 	This may be due to a blocked port, missing dependencies, 
+22:34:42  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+22:34:42  [Apache] 	Press the Logs button to view error logs and check
+22:34:42  [Apache] 	the Windows Event Viewer for more clues
+22:34:42  [Apache] 	If you need more help, copy and post this
+22:34:42  [Apache] 	entire log window on the forums
+22:34:42  [mysql] 	Status change detected: stopped
+22:34:42  [mysql] 	Error: MySQL shutdown unexpectedly.
+22:34:42  [mysql] 	This may be due to a blocked port, missing dependencies, 
+22:34:42  [mysql] 	improper privileges, a crash, or a shutdown by another method.
+22:34:42  [mysql] 	Press the Logs button to view error logs and check
+22:34:42  [mysql] 	the Windows Event Viewer for more clues
+22:34:42  [mysql] 	If you need more help, copy and post this
+22:34:42  [mysql] 	entire log window on the forums
+22:34:49  [Apache] 	Attempting to start Apache app...
+22:34:49  [Apache] 	Status change detected: running
+22:34:50  [Apache] 	Status change detected: stopped
+22:34:50  [Apache] 	Error: Apache shutdown unexpectedly.
+22:34:50  [Apache] 	This may be due to a blocked port, missing dependencies, 
+22:34:50  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+22:34:50  [Apache] 	Press the Logs button to view error logs and check
+22:34:50  [Apache] 	the Windows Event Viewer for more clues
+22:34:50  [Apache] 	If you need more help, copy and post this
+22:34:50  [Apache] 	entire log window on the forums
+22:35:21  [main] 	Deinitializing Modules
+22:35:21  [main] 	Deinitializing Control Panel
+
+22:35:30  [main] 	Initializing Control Panel
+22:35:30  [main] 	Windows Version:  Enterprise  64-bit
+22:35:30  [main] 	XAMPP Version: 8.2.12
+22:35:30  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+22:35:30  [main] 	You are not running with administrator rights! This will work for
+22:35:30  [main] 	most application stuff but whenever you do something with services
+22:35:30  [main] 	there will be a security dialogue or things will break! So think 
+22:35:30  [main] 	about running this application with administrator rights!
+22:35:30  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\xampp_aktuell\"
+22:35:30  [main] 	Checking for prerequisites
+22:35:30  [main] 	All prerequisites found
+22:35:30  [main] 	Initializing Modules
+22:35:30  [main] 	Starting Check-Timer
+22:35:30  [main] 	Control Panel Ready
+22:36:22  [main] 	Deinitializing Modules
+22:36:22  [main] 	Deinitializing Control Panel
+
+22:36:26  [main] 	Initializing Control Panel
+22:36:26  [main] 	Windows Version:  Enterprise  64-bit
+22:36:26  [main] 	XAMPP Version: 8.2.12
+22:36:26  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+22:36:26  [main] 	You are not running with administrator rights! This will work for
+22:36:26  [main] 	most application stuff but whenever you do something with services
+22:36:26  [main] 	there will be a security dialogue or things will break! So think 
+22:36:26  [main] 	about running this application with administrator rights!
+22:36:26  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\xampp_aktuell\"
+22:36:26  [main] 	Checking for prerequisites
+22:36:26  [main] 	All prerequisites found
+22:36:26  [main] 	Initializing Modules
+22:36:26  [main] 	Starting Check-Timer
+22:36:26  [main] 	Control Panel Ready
+22:36:56  [mysql] 	Attempting to start MySQL app...
+22:36:56  [Apache] 	Attempting to start Apache app...
+22:36:56  [Apache] 	Status change detected: running
+22:36:56  [mysql] 	Status change detected: running
+22:37:15  [Apache] 	Attempting to stop Apache (PID: 11712)
+22:37:16  [Apache] 	Status change detected: stopped
+22:37:16  [Apache] 	Attempting to start Apache app...
+22:37:16  [Apache] 	Status change detected: running
+22:37:18  [Apache] 	Status change detected: stopped
+22:37:18  [Apache] 	Error: Apache shutdown unexpectedly.
+22:37:18  [Apache] 	This may be due to a blocked port, missing dependencies, 
+22:37:18  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+22:37:18  [Apache] 	Press the Logs button to view error logs and check
+22:37:18  [Apache] 	the Windows Event Viewer for more clues
+22:37:18  [Apache] 	If you need more help, copy and post this
+22:37:18  [Apache] 	entire log window on the forums
+22:38:44  [Apache] 	Attempting to start Apache app...
+22:38:45  [Apache] 	Status change detected: running
+00:28:21  [mysql] 	Attempting to stop MySQL app...
+00:28:21  [mysql] 	Status change detected: stopped
+00:28:22  [Apache] 	Attempting to stop Apache (PID: 11304)
+00:28:22  [Apache] 	Attempting to stop Apache (PID: 7604)
+00:28:22  [Apache] 	Status change detected: stopped
+00:30:59  [main] 	Deinitializing Modules
+00:30:59  [main] 	Deinitializing Control Panel
+
+00:31:22  [main] 	Initializing Control Panel
+00:31:22  [main] 	Windows Version:  Enterprise  64-bit
+00:31:22  [main] 	XAMPP Version: 8.2.12
+00:31:22  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+00:31:22  [main] 	You are not running with administrator rights! This will work for
+00:31:22  [main] 	most application stuff but whenever you do something with services
+00:31:22  [main] 	there will be a security dialogue or things will break! So think 
+00:31:22  [main] 	about running this application with administrator rights!
+00:31:22  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\fitfuerinfo\"
+00:31:22  [main] 	Checking for prerequisites
+00:31:22  [main] 	All prerequisites found
+00:31:22  [main] 	Initializing Modules
+00:31:22  [main] 	Starting Check-Timer
+00:31:22  [main] 	Control Panel Ready
+00:31:30  [mysql] 	Attempting to start MySQL app...
+00:31:30  [Apache] 	Attempting to start Apache app...
+00:31:30  [Apache] 	Status change detected: running
+00:31:30  [mysql] 	Status change detected: running
+00:31:31  [Apache] 	Status change detected: stopped
+00:31:31  [Apache] 	Error: Apache shutdown unexpectedly.
+00:31:31  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:31:31  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:31:31  [Apache] 	Press the Logs button to view error logs and check
+00:31:31  [Apache] 	the Windows Event Viewer for more clues
+00:31:31  [Apache] 	If you need more help, copy and post this
+00:31:31  [Apache] 	entire log window on the forums
+00:31:36  [Apache] 	Attempting to start Apache app...
+00:31:36  [Apache] 	Status change detected: running
+00:31:37  [Apache] 	Status change detected: stopped
+00:31:37  [Apache] 	Error: Apache shutdown unexpectedly.
+00:31:37  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:31:37  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:31:37  [Apache] 	Press the Logs button to view error logs and check
+00:31:37  [Apache] 	the Windows Event Viewer for more clues
+00:31:37  [Apache] 	If you need more help, copy and post this
+00:31:37  [Apache] 	entire log window on the forums
+00:31:45  [Apache] 	Attempting to start Apache app...
+00:31:45  [Apache] 	Status change detected: running
+00:31:46  [Apache] 	Status change detected: stopped
+00:31:46  [Apache] 	Error: Apache shutdown unexpectedly.
+00:31:46  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:31:46  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:31:46  [Apache] 	Press the Logs button to view error logs and check
+00:31:46  [Apache] 	the Windows Event Viewer for more clues
+00:31:46  [Apache] 	If you need more help, copy and post this
+00:31:46  [Apache] 	entire log window on the forums
+00:32:09  [Apache] 	Attempting to start Apache app...
+00:32:09  [Apache] 	Status change detected: running
+00:32:10  [Apache] 	Status change detected: stopped
+00:32:10  [Apache] 	Error: Apache shutdown unexpectedly.
+00:32:10  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:32:10  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:32:10  [Apache] 	Press the Logs button to view error logs and check
+00:32:10  [Apache] 	the Windows Event Viewer for more clues
+00:32:10  [Apache] 	If you need more help, copy and post this
+00:32:10  [Apache] 	entire log window on the forums
+00:32:11  [mysql] 	Attempting to stop MySQL app...
+00:32:11  [mysql] 	Status change detected: stopped
+00:32:11  [Apache] 	Attempting to start Apache app...
+00:32:11  [Apache] 	Status change detected: running
+00:32:12  [Apache] 	Status change detected: stopped
+00:32:12  [Apache] 	Error: Apache shutdown unexpectedly.
+00:32:12  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:32:12  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:32:12  [Apache] 	Press the Logs button to view error logs and check
+00:32:12  [Apache] 	the Windows Event Viewer for more clues
+00:32:12  [Apache] 	If you need more help, copy and post this
+00:32:12  [Apache] 	entire log window on the forums
+00:32:34  [main] 	Deinitializing Modules
+00:32:34  [main] 	Deinitializing Control Panel
+
+00:32:37  [main] 	Initializing Control Panel
+00:32:37  [main] 	Windows Version:  Enterprise  64-bit
+00:32:37  [main] 	XAMPP Version: 8.2.12
+00:32:37  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+00:32:37  [main] 	You are not running with administrator rights! This will work for
+00:32:37  [main] 	most application stuff but whenever you do something with services
+00:32:37  [main] 	there will be a security dialogue or things will break! So think 
+00:32:37  [main] 	about running this application with administrator rights!
+00:32:37  [main] 	XAMPP Installation Directory: "c:\users\tuco\desktop\fitfuerinfo\"
+00:32:37  [main] 	Checking for prerequisites
+00:32:37  [main] 	All prerequisites found
+00:32:37  [main] 	Initializing Modules
+00:32:37  [main] 	Starting Check-Timer
+00:32:37  [main] 	Control Panel Ready
+00:32:39  [Apache] 	Attempting to start Apache app...
+00:32:39  [Apache] 	Status change detected: running
+00:32:39  [Apache] 	Status change detected: stopped
+00:32:39  [Apache] 	Error: Apache shutdown unexpectedly.
+00:32:39  [Apache] 	This may be due to a blocked port, missing dependencies, 
+00:32:39  [Apache] 	improper privileges, a crash, or a shutdown by another method.
+00:32:39  [Apache] 	Press the Logs button to view error logs and check
+00:32:39  [Apache] 	the Windows Event Viewer for more clues
+00:32:39  [Apache] 	If you need more help, copy and post this
+00:32:39  [Apache] 	entire log window on the forums
+00:34:11  [Apache] 	Attempting to start Apache app...
+00:34:11  [Apache] 	Status change detected: running
+00:34:12  [mysql] 	Attempting to start MySQL app...
+00:34:25  [mysql] 	Attempting to start MySQL app...
+00:34:25  [mysql] 	Status change detected: running
+00:37:06  [mysql] 	Attempting to stop MySQL app...
+00:37:06  [mysql] 	Status change detected: stopped
+00:37:06  [Apache] 	Attempting to stop Apache (PID: 2344)
+00:37:06  [Apache] 	Attempting to stop Apache (PID: 10152)
+00:37:07  [Apache] 	Status change detected: stopped
+00:37:27  [main] 	Deinitializing Modules
+00:37:27  [main] 	Deinitializing Control Panel
+
