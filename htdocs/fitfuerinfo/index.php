@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("includes/header.php");
 ?>
 
@@ -15,9 +16,15 @@ include("includes/header.php");
             Räume einsehen und Raumbelegungen planen.
         </p>
 
-        <a href="login.php" class="w3-button w3-blue w3-round">
-            Zum login    
-        </a>
+        <?php if (isset($_SESSION["mitarbeiter_id"])) : ?>
+            <a href="dashboard.php" class="w3-button w3-blue w3-round">
+                Zum Dashboard
+            </a>
+        <?php else : ?>
+            <a href="login.php" class="w3-button w3-blue w3-round">
+                Zum Login
+            </a>
+        <?php endif; ?>
     </div>
 </div>
 

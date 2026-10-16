@@ -121,7 +121,7 @@ include("includes/header.php");
         <form method="post" action="passwort_setzen.php">
 
             <input
-                type="text"
+                type="hidden"
                 name="aktivierungscode"
                 value="<?php echo htmlspecialchars($aktivierungscode); ?>"
             >

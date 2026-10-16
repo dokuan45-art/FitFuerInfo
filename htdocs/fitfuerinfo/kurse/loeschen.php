@@ -32,9 +32,29 @@ if (!$istAdmin && !$istErsteller) {
     die("Du hast keine Berechtigung, diesen Kurs zu löschen.");
 }
 
-$sql = "DELETE FROM kurse WHERE kurs_id = :kurs_id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":kurs_id" => $id]);
+try {
+    $pdo->beginTransaction();
+
+    $sql = "DELETE FROM buchungen WHERE kurs_id = :kurs_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":kurs_id" => $id]);
+
+    $sql = "DELETE FROM kurs_mitarbeiter WHERE kurs_id = :kurs_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":kurs_id" => $id]);
+
+    $sql = "DELETE FROM kurse WHERE kurs_id = :kurs_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":kurs_id" => $id]);
+
+    $pdo->commit();
+} catch (PDOException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    die("Der Kurs konnte nicht gelöscht werden.");
+}
 
 header("Location: uebersicht.php");
 exit;

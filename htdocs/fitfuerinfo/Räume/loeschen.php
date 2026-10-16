@@ -39,9 +39,29 @@ if (!$istAdmin && !$istErsteller) {
     die("Du hast keine Berechtigung, diesen Raum zu löschen.");
 }
 
-$sql = "DELETE FROM raeume WHERE raum_id = :raum_id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([":raum_id" => $id]);
+try {
+    $pdo->beginTransaction();
+
+    $sql = "DELETE FROM buchungen WHERE raum_id = :raum_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":raum_id" => $id]);
+
+    $sql = "DELETE FROM raum_mitarbeiter WHERE raum_id = :raum_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":raum_id" => $id]);
+
+    $sql = "DELETE FROM raeume WHERE raum_id = :raum_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":raum_id" => $id]);
+
+    $pdo->commit();
+} catch (PDOException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    die("Der Raum konnte nicht gelöscht werden.");
+}
 
 header("Location: uebersicht.php");
 exit;

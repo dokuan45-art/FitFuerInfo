@@ -26,7 +26,9 @@ include("includes/header.php");
                     <ul class="w3-ul">
                         <li><a href="index.php">Startseite</a></li>
                         <li><a href="dashboard.php">Dashboard</a></li>
-                        <li><a href="login.php">Login</a></li>
+                        <li>
+                            <a href="logout.php" class="w3-button w3-red">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -35,13 +37,15 @@ include("includes/header.php");
                 <div class="w3-card w3-light-grey w3-padding">
                     <h3>Verwaltung</h3>
                     <ul class="w3-ul">
-                        <li><a href="admin/mitarbeiter_erstellen.php">Mitarbeiter erstellen</a></li>
+                        <?php if (isset($_SESSION["ist_admin"]) && $_SESSION["ist_admin"] == 1) : ?>
+                            <li><a href="admin/mitarbeiter_uebersicht.php">Mitarbeiterübersicht</a></li>
+                            <li><a href="admin/mitarbeiter_erstellen.php">Mitarbeiter erstellen</a></li>
+                        <?php endif; ?>
                         <li><a href="kurse/uebersicht.php">Kursübersicht</a></li>
                         <li><a href="Räume/uebersicht.php">Raumübersicht</a></li>
                         <li><a href="buchungen/uebersicht.php">Raumbelegungen</a></li>
                         <li><a href="buchungen/neu.php">Raum buchen</a></li>
                         <li><a href="Räume/neu.php">Raum erstellen</a></li>
-                        <li><a href="passwort_setzen.php">Passwort festlegen</a></li>
                     </ul>
                 </div>
             </div>

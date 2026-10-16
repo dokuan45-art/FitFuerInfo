@@ -58,10 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fehler = "Der Raum hat zu wenige Arbeitsplätze für diesen Kurs.";
         } else {
             $checkSql = "
-                SELECT 1 FROM buchungen
-                WHERE raum_id = :raum_id
+                SELECT 1
+                FROM buchungen b
+                INNER JOIN raeume r ON r.raum_id = b.raum_id
+                INNER JOIN kurse k ON k.kurs_id = b.kurs_id
+                WHERE b.raum_id = :raum_id
                 AND (
-                    (beginn <= :ende AND ende >= :beginn)
+                    (b.beginn <= :ende AND b.ende >= :beginn)
                 )
                 LIMIT 1
             ";

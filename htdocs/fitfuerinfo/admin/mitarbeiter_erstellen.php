@@ -9,6 +9,7 @@ if (!isset($_SESSION["mitarbeiter_id"]) || !isset($_SESSION["ist_admin"]) || $_S
 include("../config/database.php");
 
 $meldung = "";
+$aktivierungslink = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -29,6 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ":aktivierungscode" => $aktivierungscode
         ));
         $meldung = "Mitarbeiter wurde erfolgreich erstellt.";
+
+        $protokoll = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https" : "http";
+        $basisUrl = $protokoll . "://" . $_SERVER["HTTP_HOST"] . rtrim(dirname(dirname($_SERVER["SCRIPT_NAME"])), "/\\");
+        $aktivierungslink = $basisUrl . "/passwort_setzen.php?aktivierungscode=" . rawurlencode($aktivierungscode);
     }
 }
 
@@ -44,6 +49,29 @@ include("../includes/header.php");
                 <p><?php echo htmlspecialchars($meldung); ?></p>
             </div>
 
+        <?php } ?>
+
+        <?php if ($aktivierungslink !== "") { ?>
+            <div class="w3-panel w3-pale-blue">
+                <p>
+                    Sende diesen Link an den neuen Mitarbeiter, damit er sein Passwort festlegen kann.
+                    Der Link wird hier nur direkt nach der Erstellung angezeigt.
+                </p>
+                <input
+                    id="aktivierungslink"
+                    class="w3-input w3-border w3-margin-bottom"
+                    type="text"
+                    value="<?php echo htmlspecialchars($aktivierungslink); ?>"
+                    readonly
+                >
+                <button
+                    type="button"
+                    class="w3-button w3-blue"
+                    onclick="navigator.clipboard.writeText(document.getElementById('aktivierungslink').value).then(function () { this.textContent = 'Kopiert'; }.bind(this)).catch(function () { alert('Der Link konnte nicht kopiert werden.'); });"
+                >
+                    Link kopieren
+                </button>
+            </div>
         <?php } ?>
 
         <form method="post" action="mitarbeiter_erstellen.php">
