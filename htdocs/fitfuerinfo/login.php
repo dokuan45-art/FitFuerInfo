@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute(array(":benutzername" => $benutzername));
 
         $mitarbeiter = $stmt->fetch();
-        $ist_root_login = ($benutzername === $username && $passwort === $password);
 
         if ($mitarbeiter && !empty($mitarbeiter["passwort"]) && password_verify($passwort, $mitarbeiter["passwort"])) {
 
@@ -31,19 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["vorname"] = $mitarbeiter["vorname"];
             $_SESSION["nachname"] = $mitarbeiter["nachname"];
             $_SESSION["ist_admin"] = $mitarbeiter["ist_admin"];
-
-            header("Location: dashboard.php");
-            exit;
-
-        } elseif ($ist_root_login) {
-
-            session_regenerate_id(true);
-
-            $_SESSION["mitarbeiter_id"] = 0;
-            $_SESSION["benutzername"] = $benutzername;
-            $_SESSION["vorname"] = "Root";
-            $_SESSION["nachname"] = "User";
-            $_SESSION["ist_admin"] = 1;
 
             header("Location: dashboard.php");
             exit;
