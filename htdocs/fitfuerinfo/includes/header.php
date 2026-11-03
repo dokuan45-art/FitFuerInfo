@@ -7,6 +7,7 @@
     <title>FitFuerInfo</title>
 
     <link rel="stylesheet" href="/fitfuerinfo/w3.css">
+    <link rel="stylesheet" href="/fitfuerinfo/app.css">
 </head>
 
 <body class="w3-light-grey">

@@ -44,6 +44,9 @@ include("../includes/header.php");
 
         <p>
             <a href="neu.php" class="w3-button w3-blue">Neuen Raum anlegen</a>
+            <?php if ((int)$_SESSION["ist_admin"] === 1): ?>
+                <a href="../software/uebersicht.php" class="w3-button w3-indigo">Software verwalten</a>
+            <?php endif; ?>
         </p>
 
         <?php foreach ($raeume as $raum): ?>
@@ -58,6 +61,13 @@ include("../includes/header.php");
                 </p>
 
                 <?php
+                $softwareStmt = $pdo->prepare("SELECT s.name FROM raum_software rs JOIN software s ON s.software_id = rs.software_id WHERE rs.raum_id = :raum_id ORDER BY s.name ASC");
+                $softwareStmt->execute(array(":raum_id" => $raum["raum_id"]));
+                $raumSoftware = $softwareStmt->fetchAll(PDO::FETCH_COLUMN);
+                ?>
+                <p><strong>Installierte Software:</strong> <?php echo empty($raumSoftware) ? "Keine angegeben" : htmlspecialchars(implode(", ", $raumSoftware)); ?></p>
+
+                <?php
                 $darfBearbeiten = darfRaumBearbeiten(
                     $pdo,
                     $raum["raum_id"],
@@ -70,6 +80,12 @@ include("../includes/header.php");
                     <a href="bearbeiten.php?id=<?php echo (int)$raum["raum_id"]; ?>" class="w3-button w3-green">
                         Bearbeiten
                     </a>
+
+                    <?php if ((int)$_SESSION["ist_admin"] === 1): ?>
+                        <a href="../software/uebersicht.php?raum_id=<?php echo (int)$raum["raum_id"]; ?>" class="w3-button w3-indigo">
+                            Software zuordnen
+                        </a>
+                    <?php endif; ?>
 
                     <a href="loeschen.php?id=<?php echo (int)$raum["raum_id"]; ?>" class="w3-button w3-red" onclick="return confirm('Raum wirklich löschen?');">
                         Löschen

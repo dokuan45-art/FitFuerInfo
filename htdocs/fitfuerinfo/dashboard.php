@@ -9,47 +9,37 @@ if (!isset($_SESSION["mitarbeiter_id"])) {
 include("includes/header.php");
 ?>
 
-<div class="w3-content w3-padding-32">
-    <div class="w3-card w3-white w3-padding">
-        <h2 class="w3-center">
-            Willkommen bei FitFürInfo, <?php echo htmlspecialchars($_SESSION["vorname"]); echo " "; echo htmlspecialchars($_SESSION["nachname"]); ?>!
-        </h2>
+<main class="w3-content w3-padding-32 dashboard-wrap">
+    <section class="dashboard-hero w3-card">
+        <p class="w3-small" style="margin:0 0 6px;">FITFUERINFO</p>
+        <h2>Willkommen, <?php echo htmlspecialchars(trim($_SESSION["vorname"] . " " . $_SESSION["nachname"]), ENT_QUOTES, "UTF-8"); ?>!</h2>
+        <p style="margin:0;">Verwaltung von Kursen, Räumen und Raumbelegungen.</p>
+    </section>
 
-        <p class="w3-center">
-            Verwaltung von Kursen, Räumen und Raumbelegungen
-        </p>
+    <section class="dashboard-grid" aria-label="Dashboard-Bereiche">
+        <article class="w3-card w3-white w3-padding dashboard-card">
+            <h3 class="w3-medium" style="margin:0;">Start</h3>
+            <a class="dashboard-link" href="index.php">Startseite &rarr;</a>
+            <a class="dashboard-link" href="buchungen/uebersicht.php">Buchungen &rarr;</a>
+            <a class="dashboard-link" href="logout.php">Logout &rarr;</a>
+        </article>
 
-        <div class="w3-row-padding">
-            <div class="w3-half w3-margin-bottom">
-                <div class="w3-card w3-light-grey w3-padding">
-                    <h3>Start</h3>
-                    <ul class="w3-ul">
-                        <li><a href="index.php">Startseite</a></li>
-                        <li><a href="dashboard.php">Dashboard</a></li>
-                        <li>
-                            <a href="logout.php" class="w3-button w3-red">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <article class="w3-card w3-white w3-padding dashboard-card">
+            <h3 class="w3-medium" style="margin:0;">Verwaltung</h3>
+            <a class="dashboard-link" href="kurse/uebersicht.php">Kurse &rarr;</a>
+            <a class="dashboard-link" href="Räume/uebersicht.php">Räume &rarr;</a>
+            <a class="dashboard-link" href="software/uebersicht.php">Softwareverwaltung &rarr;</a>
+        </article>
 
-            <div class="w3-half w3-margin-bottom">
-                <div class="w3-card w3-light-grey w3-padding">
-                    <h3>Verwaltung</h3>
-                    <ul class="w3-ul">
-                        <li><a href="kurse/uebersicht.php">Kurse</a></li>
-                        <li><a href="Räume/uebersicht.php">Räume</a></li>                        
-                        <li><a href="buchungen/uebersicht.php">Laufend</a></li>
-                        <?php if (isset($_SESSION["ist_admin"]) && $_SESSION["ist_admin"] == 1) : ?>
-                            <li><a href="admin/mitarbeiter_uebersicht.php">Mitarbeiterübersicht</a></li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        <?php if (isset($_SESSION["ist_admin"]) && (int)$_SESSION["ist_admin"] === 1) : ?>
+            <article class="w3-card w3-white w3-padding dashboard-card">
+                <h3 class="w3-medium" style="margin:0;">Administration</h3>
+                <a class="dashboard-link" href="admin/index.php">Admin-Panel &rarr;</a>
+                <a class="dashboard-link" href="admin/mitarbeiter_uebersicht.php">Mitarbeiterübersicht &rarr;</a>
+                <a class="dashboard-link" href="admin/mitarbeiter_erstellen.php">Mitarbeiter erstellen &rarr;</a>
+            </article>
+        <?php endif; ?>
+    </section>
+</main>
 
-<?php
-include("includes/footer.php");
-?>
+<?php include("includes/footer.php"); ?>

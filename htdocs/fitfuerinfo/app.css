@@ -1,0 +1,76 @@
+/* Gemeinsames Design aus Dashboard und Admin-Panel */
+.dashboard-wrap,
+.admin-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dashboard-hero,
+.admin-hero {
+    border-radius: 10px;
+    background: linear-gradient(120deg, #173b63, #2475a8);
+    color: #fff;
+    padding: 28px;
+}
+
+.dashboard-hero h2,
+.admin-hero h2 {
+    margin: 0 0 8px;
+    color: #fff;
+}
+
+.dashboard-grid,
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 22px 0;
+}
+
+.dashboard-card,
+.admin-card {
+    border-radius: 8px;
+    border-top: 4px solid #2475a8;
+}
+
+.dashboard-link {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+    text-decoration: none;
+}
+
+.dashboard-link:last-child {
+    border-bottom: 0;
+}
+
+.dashboard-link:hover {
+    color: #2475a8;
+}
+
+.admin-number {
+    margin: 10px 0 2px;
+    color: #173b63;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Dieselben weißen Boxen und Akzentlinien auf den übrigen Inhaltsseiten. */
+.w3-content > .w3-card.w3-white {
+    overflow: hidden;
+    border-top: 4px solid #2475a8;
+    border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+    .dashboard-hero,
+    .admin-hero {
+        padding: 22px;
+    }
+}

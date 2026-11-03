@@ -35,6 +35,12 @@ if (!$istAdmin && !$istErsteller) {
 
 $fehler = "";
 $meldung = "";
+$softwareStmt = $pdo->query("SELECT software_id, name FROM software ORDER BY name ASC");
+$softwarePakete = $softwareStmt->fetchAll();
+$softwareIdsAuswahl = array();
+$softwareStmt = $pdo->prepare("SELECT software_id FROM raum_software WHERE raum_id = :raum_id");
+$softwareStmt->execute(array(":raum_id" => $id));
+foreach ($softwareStmt->fetchAll() as $softwareZeile) { $softwareIdsAuswahl[] = (string)$softwareZeile["software_id"]; }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $aktion = isset($_POST["aktion"]) ? trim($_POST["aktion"]) : "save_raum";
@@ -43,28 +49,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = isset($_POST["name"]) ? trim($_POST["name"]) : "";
         $beschreibung = isset($_POST["beschreibung"]) ? trim($_POST["beschreibung"]) : "";
         $arbeitsplaetze = isset($_POST["arbeitsplaetze"]) ? trim($_POST["arbeitsplaetze"]) : "";
+        $softwareIds = isset($_POST["software_ids"]) && is_array($_POST["software_ids"]) ? $_POST["software_ids"] : array();
+        $softwareIds = array_values(array_unique(array_filter(array_map("intval", $softwareIds), function ($softwareId) { return $softwareId > 0; })));
+        $softwareIdsAuswahl = array_map("strval", $softwareIds);
 
         if ($name === "") {
             $fehler = "Bitte einen Raumnamen eingeben.";
         } elseif ($arbeitsplaetze === "" || !ctype_digit($arbeitsplaetze) || (int)$arbeitsplaetze <= 0) {
             $fehler = "Bitte eine gültige Anzahl an Arbeitsplätzen angeben.";
         } else {
-            $sql = "UPDATE raeume
-                    SET name = :name,
-                        beschreibung = :beschreibung,
-                        arbeitsplaetze = :arbeitsplaetze
-                    WHERE raum_id = :raum_id";
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ":name" => $name,
-                ":beschreibung" => $beschreibung,
-                ":arbeitsplaetze" => (int)$arbeitsplaetze,
-                ":raum_id" => $id
-            ]);
-
-            header("Location: uebersicht.php");
-            exit;
+            try {
+                $pdo->beginTransaction();
+                $sql = "UPDATE raeume SET name = :name, beschreibung = :beschreibung, arbeitsplaetze = :arbeitsplaetze WHERE raum_id = :raum_id";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(array(":name" => $name, ":beschreibung" => $beschreibung, ":arbeitsplaetze" => (int)$arbeitsplaetze, ":raum_id" => $id));
+                $stmt = $pdo->prepare("DELETE FROM raum_software WHERE raum_id = :raum_id");
+                $stmt->execute(array(":raum_id" => $id));
+                if (!empty($softwareIds)) {
+                    $stmt = $pdo->prepare("INSERT INTO raum_software (raum_id, software_id) VALUES (:raum_id, :software_id)");
+                    foreach ($softwareIds as $softwareId) { $stmt->execute(array(":raum_id" => $id, ":software_id" => $softwareId)); }
+                }
+                $pdo->commit();
+                header("Location: uebersicht.php"); exit;
+            } catch (PDOException $e) {
+                if ($pdo->inTransaction()) { $pdo->rollBack(); }
+                $fehler = "Raum oder Softwarezuordnung konnte nicht gespeichert werden.";
+            }
         }
     }
 
@@ -185,6 +195,14 @@ include("../includes/header.php");
                 value="<?php echo htmlspecialchars($raum["name"]); ?>"
                 required
             >
+
+            <label><b>Installierte Softwarepakete</b></label>
+            <select class="w3-select w3-border w3-margin-bottom" name="software_ids[]" multiple size="6">
+                <?php foreach ($softwarePakete as $paket): ?>
+                    <option value="<?php echo (int)$paket["software_id"]; ?>" <?php echo in_array((string)$paket["software_id"], $softwareIdsAuswahl, true) ? "selected" : ""; ?>><?php echo htmlspecialchars($paket["name"]); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="w3-small">Mehrfachauswahl mit Strg/Command.</p>
 
             <label><b>Beschreibung</b></label>
             <textarea

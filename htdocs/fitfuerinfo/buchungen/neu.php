@@ -57,6 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ((int)$raum["arbeitsplaetze"] < (int)$kurs["max_teilnehmer"]) {
             $fehler = "Der Raum hat zu wenige Arbeitsplätze für diesen Kurs.";
         } else {
+            $softwareSql = "
+                SELECT s.name
+                FROM kurs_software ks
+                INNER JOIN software s ON s.software_id = ks.software_id
+                LEFT JOIN raum_software rs
+                    ON rs.software_id = ks.software_id
+                    AND rs.raum_id = :raum_id
+                WHERE ks.kurs_id = :kurs_id
+                    AND rs.software_id IS NULL
+                ORDER BY s.name ASC
+            ";
+            $softwareStmt = $pdo->prepare($softwareSql);
+            $softwareStmt->execute(array(":raum_id" => $raumId, ":kurs_id" => $kursId));
+            $fehlendeSoftware = $softwareStmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!empty($fehlendeSoftware)) {
+                $fehler = "Dem Raum fehlt folgende benötigte Software: " . implode(", ", $fehlendeSoftware) . ".";
+            } else {
             $checkSql = "
                 SELECT 1
                 FROM buchungen b
@@ -93,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 header("Location: uebersicht.php");
                 exit;
+            }
             }
         }
     }

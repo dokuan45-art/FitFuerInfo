@@ -41,7 +41,7 @@ include("../includes/header.php");
 ?>
 
 <div class="w3-content w3-padding-32">
-    <div class="w3-cardd w3-white w3-padding">
+    <div class="w3-card w3-white w3-padding">
         <h2 class="w3-center">Mitarbeiter erstellen</h2>
 
         <?php if ($meldung != "") { ?>

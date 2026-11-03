@@ -115,17 +115,17 @@ include("../includes/header.php");
             >
 
             <label><b>Benötigte Softwarepakete</b></label>
-            <select class="w3-select w3-border w3-margin-bottom" name="software_ids[]" multiple size="6">
+            <div class="w3-border w3-padding w3-margin-bottom">
                 <?php foreach ($softwarePakete as $paket): ?>
                     <?php
                     $selected = isset($_POST["software_ids"]) && is_array($_POST["software_ids"]) && in_array((string)$paket["software_id"], $_POST["software_ids"], true);
                     ?>
-                    <option value="<?php echo (int)$paket["software_id"]; ?>" <?php echo $selected ? "selected" : ""; ?>>
+                    <label class="w3-block">
+                        <input type="checkbox" name="software_ids[]" value="<?php echo (int)$paket["software_id"]; ?>" <?php echo $selected ? "checked" : ""; ?>>
                         <?php echo htmlspecialchars($paket["name"]); ?>
-                    </option>
+                    </label>
                 <?php endforeach; ?>
-            </select>
-            <p class="w3-small">Mehrfachauswahl mit Strg/Command.</p>
+            </div>
 
             <button type="submit" class="w3-button w3-blue">Kurs speichern</button>
             <a href="uebersicht.php" class="w3-button w3-gray">Abbrechen</a>

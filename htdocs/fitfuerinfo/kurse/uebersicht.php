@@ -74,6 +74,13 @@ include("../includes/header.php");
                 </p>
 
                 <?php
+                $softwareStmt = $pdo->prepare("SELECT s.name FROM kurs_software ks JOIN software s ON s.software_id = ks.software_id WHERE ks.kurs_id = :kurs_id ORDER BY s.name ASC");
+                $softwareStmt->execute(array(":kurs_id" => $kurs["kurs_id"]));
+                $kursSoftware = $softwareStmt->fetchAll(PDO::FETCH_COLUMN);
+                ?>
+                <p><strong>Benötigte Software:</strong> <?php echo empty($kursSoftware) ? "Keine angegeben" : htmlspecialchars(implode(", ", $kursSoftware)); ?></p>
+
+                <?php
                 $buchungsSql = "
                     SELECT b.*, r.name AS raum_name
                     FROM buchungen b

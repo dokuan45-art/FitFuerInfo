@@ -41,6 +41,13 @@ if (!$istAdmin && !$istErsteller && !$istZusatzEigentuemer) {
 $fehler = "";
 $meldung = "";
 
+$stmt = $pdo->query("SELECT software_id, name FROM software ORDER BY name ASC");
+$softwarePakete = $stmt->fetchAll();
+
+$stmt = $pdo->prepare("SELECT software_id FROM kurs_software WHERE kurs_id = :kurs_id");
+$stmt->execute(array(":kurs_id" => $id));
+$ausgewaehlteSoftwareIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $aktion = isset($_POST["aktion"]) ? trim($_POST["aktion"]) : "save_course";
 
@@ -48,28 +55,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = isset($_POST["name"]) ? trim($_POST["name"]) : "";
         $beschreibung = isset($_POST["beschreibung"]) ? trim($_POST["beschreibung"]) : "";
         $maxTeilnehmer = isset($_POST["max_teilnehmer"]) ? trim($_POST["max_teilnehmer"]) : "";
+        $softwareIds = isset($_POST["software_ids"]) && is_array($_POST["software_ids"]) ? $_POST["software_ids"] : array();
+        $gueltigeSoftwareIds = array();
+
+        foreach ($softwareIds as $softwareId) {
+            if (ctype_digit((string)$softwareId) && (int)$softwareId > 0) {
+                $gueltigeSoftwareIds[] = (int)$softwareId;
+            }
+        }
+        $gueltigeSoftwareIds = array_values(array_unique($gueltigeSoftwareIds));
+        $ausgewaehlteSoftwareIds = $gueltigeSoftwareIds;
 
         if ($name === "") {
             $fehler = "Bitte einen Kursnamen eingeben.";
         } elseif (!ctype_digit($maxTeilnehmer) || (int)$maxTeilnehmer <= 0) {
             $fehler = "Bitte eine gültige Anzahl an Teilnehmern eingeben.";
         } else {
-            $sql = "UPDATE kurse
-                    SET name = :name,
-                        beschreibung = :beschreibung,
-                        max_teilnehmer = :max_teilnehmer
-                    WHERE kurs_id = :kurs_id";
+            try {
+                $pdo->beginTransaction();
+                $sql = "UPDATE kurse SET name = :name, beschreibung = :beschreibung, max_teilnehmer = :max_teilnehmer WHERE kurs_id = :kurs_id";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(array(":name" => $name, ":beschreibung" => $beschreibung, ":max_teilnehmer" => (int)$maxTeilnehmer, ":kurs_id" => $id));
 
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ":name" => $name,
-                ":beschreibung" => $beschreibung,
-                ":max_teilnehmer" => (int)$maxTeilnehmer,
-                ":kurs_id" => $id
-            ]);
+                $stmt = $pdo->prepare("DELETE FROM kurs_software WHERE kurs_id = :kurs_id");
+                $stmt->execute(array(":kurs_id" => $id));
 
-            header("Location: uebersicht.php");
-            exit;
+                if (!empty($gueltigeSoftwareIds)) {
+                    $stmt = $pdo->prepare("INSERT INTO kurs_software (kurs_id, software_id) VALUES (:kurs_id, :software_id)");
+                    foreach ($gueltigeSoftwareIds as $softwareId) {
+                        $stmt->execute(array(":kurs_id" => $id, ":software_id" => $softwareId));
+                    }
+                }
+
+                $pdo->commit();
+                header("Location: uebersicht.php");
+                exit;
+            } catch (PDOException $e) {
+                if ($pdo->inTransaction()) {
+                    $pdo->rollBack();
+                }
+                $fehler = "Kurs oder Softwarezuordnung konnte nicht gespeichert werden.";
+            }
         }
     }
 
@@ -220,6 +246,17 @@ include("../includes/header.php");
                 value="<?php echo htmlspecialchars($kurs["max_teilnehmer"]); ?>"
                 required
             >
+
+            <label><b>Benötigte Softwarepakete</b></label>
+            <div class="w3-border w3-padding w3-margin-bottom">
+                <?php foreach ($softwarePakete as $paket): ?>
+                    <label class="w3-block">
+                        <input type="checkbox" name="software_ids[]" value="<?php echo (int)$paket["software_id"]; ?>" <?php echo in_array((string)$paket["software_id"], array_map("strval", $ausgewaehlteSoftwareIds), true) ? "checked" : ""; ?>>
+                        <?php echo htmlspecialchars($paket["name"]); ?>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+            <p><a href="../software/uebersicht.php" class="w3-button w3-indigo">Softwareverwaltung öffnen</a></p>
 
             <button type="submit" class="w3-button w3-blue">Änderungen speichern</button>
             <a href="uebersicht.php" class="w3-button w3-gray">Zurück</a>
