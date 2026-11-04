@@ -207,6 +207,6 @@ class __TwigTemplate_aa3c88b7aa4464c39c7a01a4faeaabe3 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "header.twig", "C:\\Users\\Tuco\\Desktop\\XAMPP_Aktuell\\phpMyAdmin\\templates\\header.twig");
+        return new Source("", "header.twig", "C:\\Users\\adam-3z0hv9rmpbxv8fu\\Desktop\\FitFuerInfo\\phpMyAdmin\\templates\\header.twig");
     }
 }

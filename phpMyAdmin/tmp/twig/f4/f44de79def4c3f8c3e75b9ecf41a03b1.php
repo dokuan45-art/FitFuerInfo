@@ -137,9 +137,9 @@ echo _gettext("Git information missing!");
                 }
                 // line 38
                 echo "      ";
-                $___internal_parse_33_ = ('' === $tmp = ob_get_clean()) ? '' : new Markup($tmp, $this->env->getCharset());
+                $___internal_parse_34_ = ('' === $tmp = ob_get_clean()) ? '' : new Markup($tmp, $this->env->getCharset());
                 // line 25
-                echo $this->env->getFilter('notice')->getCallable()($___internal_parse_33_);
+                echo $this->env->getFilter('notice')->getCallable()($___internal_parse_34_);
                 // line 39
                 echo "    </div>
   ";
@@ -178,6 +178,6 @@ echo _gettext("Git information missing!");
 
     public function getSourceContext()
     {
-        return new Source("", "footer.twig", "C:\\Users\\Tuco\\Desktop\\XAMPP_Aktuell\\phpMyAdmin\\templates\\footer.twig");
+        return new Source("", "footer.twig", "C:\\Users\\adam-3z0hv9rmpbxv8fu\\Desktop\\FitFuerInfo\\phpMyAdmin\\templates\\footer.twig");
     }
 }

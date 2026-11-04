@@ -249,3 +249,50 @@
 00:37:27  [main] 	Deinitializing Modules
 00:37:27  [main] 	Deinitializing Control Panel
 
+08:10:42  [main] 	Initializing Control Panel
+08:10:42  [main] 	Windows Version:  Enterprise  64-bit
+08:10:42  [main] 	XAMPP Version: 8.2.12
+08:10:42  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+08:10:42  [main] 	You are not running with administrator rights! This will work for
+08:10:42  [main] 	most application stuff but whenever you do something with services
+08:10:42  [main] 	there will be a security dialogue or things will break! So think 
+08:10:42  [main] 	about running this application with administrator rights!
+08:10:42  [main] 	XAMPP Installation Directory: "c:\users\adam-3z0hv9rmpbxv8fu\desktop\fitfuerinfo\"
+08:10:42  [main] 	Checking for prerequisites
+08:10:44  [main] 	All prerequisites found
+08:10:44  [main] 	Initializing Modules
+08:10:44  [main] 	Starting Check-Timer
+08:10:44  [main] 	Control Panel Ready
+08:11:34  [Apache] 	Attempting to start Apache app...
+08:11:34  [Apache] 	Status change detected: running
+08:11:35  [mysql] 	Attempting to start MySQL app...
+08:11:35  [mysql] 	Status change detected: running
+09:30:14  [Apache] 	Attempting to stop Apache (PID: 11684)
+09:30:14  [Apache] 	Attempting to stop Apache (PID: 6712)
+09:30:14  [Apache] 	Status change detected: stopped
+09:30:14  [mysql] 	Attempting to stop MySQL app...
+09:30:14  [mysql] 	Status change detected: stopped
+16:13:40  [main] 	Deinitializing Modules
+16:13:40  [main] 	Deinitializing Control Panel
+
+08:27:07  [main] 	Initializing Control Panel
+08:27:07  [main] 	Windows Version:  Enterprise  64-bit
+08:27:07  [main] 	XAMPP Version: 8.2.12
+08:27:07  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+08:27:07  [main] 	You are not running with administrator rights! This will work for
+08:27:07  [main] 	most application stuff but whenever you do something with services
+08:27:07  [main] 	there will be a security dialogue or things will break! So think 
+08:27:07  [main] 	about running this application with administrator rights!
+08:27:07  [main] 	XAMPP Installation Directory: "c:\users\adam-3z0hv9rmpbxv8fu\desktop\fitfuerinfo\"
+08:27:07  [main] 	Checking for prerequisites
+08:27:09  [main] 	All prerequisites found
+08:27:09  [main] 	Initializing Modules
+08:27:09  [main] 	Starting Check-Timer
+08:27:09  [main] 	Control Panel Ready
+08:27:10  [Apache] 	Attempting to start Apache app...
+08:27:10  [mysql] 	Attempting to start MySQL app...
+08:27:11  [Apache] 	Status change detected: running
+08:27:11  [mysql] 	Status change detected: running
+08:27:40  [main] 	Deinitializing Modules
+08:27:40  [main] 	Deinitializing Control Panel
+
